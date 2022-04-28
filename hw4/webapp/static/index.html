@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSC453 Hw4</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+        .tg .tg-7btt{border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
+        .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+        </style>
+    <script>
+        setInterval(function(){
+            fetch("/doorStatus")
+            .then(function(response) {
+                console.log(response)
+                return response.json();
+            })
+            .then(function(json){
+                var status = document.getElementById("status");
+                status.innerText = json['status'];
+                var time = document.getElementById("status-time");
+                time.innerText = json['time'];
+            });
+            fetch("/lastReceivedData")
+            .then(function(response){
+                console.log(response)
+                return response.json();
+            })
+            .then(function(json){
+                var gyroX = document.getElementById("gyr_x");
+                var gyroY = document.getElementById("gyr_y");
+                var gyroZ = document.getElementById("gyr_z");
+                var accX = document.getElementById("acc_x");
+                var accY = document.getElementById("acc_y");
+                var accZ = document.getElementById("acc_z");
+                gyroX.innerText = json["gyr_x"];
+                gyroY.innerText = json["gyr_y"];
+                gyroZ.innerText = json["gyr_z"];
+                accX.innerText = json["acc_x"];
+                accY.innerText = json["acc_y"];
+                accZ.innerText = json["acc_z"];
+                var time = document.getElementById("gyro-time");
+                time.innerText = json['time'];
+            });
+        }, 1000);
+    </script>
+    <h1> CSC453 Hw4 </h1>
+    <h3>Last Received Value</h3>
+    <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg .tg-fymr{border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+        .tg .tg-7btt{border-color:inherit;font-weight:bold;text-align:center;vertical-align:top}
+        .tg .tg-amwm{font-weight:bold;text-align:center;vertical-align:top}
+        .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+        .tg .tg-0lax{text-align:left;vertical-align:top}
+        </style>
+        <table class="tg">
+            <thead>
+            <tr>
+                <th class="tg-fymr">Variable</th>
+                <th class="tg-7btt">X</th>
+                <th class="tg-amwm">Y</th>
+                <th class="tg-amwm">Z</th>
+                <th class="tg-0lax"><span style="font-weight:bold">Timestamp</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="tg-0pky">Gyroscope</td>
+                <td class="tg-0pky"> <div id="gyr_x"></div> </td>
+                <td class="tg-0lax"> <div id="gyr_y"></div> </td>
+                <td class="tg-0lax"> <div id="gyr_z"></div> </td>
+                <td class="tg-nrix" rowspan="2"><div id="gyro-time"></div></td>
+            </tr>
+            <tr>
+                <td class="tg-0lax">Accelerometer</td>
+                <td class="tg-0lax"> <div id="acc_x"></div> </td>
+                <td class="tg-0lax"> <div id="acc_y"></div> </td>
+                <td class="tg-0lax"> <div id="acc_z"></div> </td>
+            </tr>
+            </tbody>
+            </table>
+  
+    <h3>Last Decision</h3>
+        <table class="tg">
+        <thead>
+          <tr>
+            <th class="tg-fymr">Decision</th>
+            <th class="tg-7btt">Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tg-0pky"> <div id="status"></div> </td>
+            <td class="tg-0pky"> <div id="status-time"> </div></td>
+          </tr>
+        </tbody>
+        </table>
+    
+    
+</body>
+</html>
